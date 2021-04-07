@@ -1,5 +1,5 @@
-FROM openfaas/of-watchdog:0.7.7 as watchdog
-FROM golang:1.14-alpine3.11 as build
+FROM ghcr.io/openfaas/of-watchdog:0.8.4 as watchdog
+FROM golang:1.16-alpine3.13 as build
 
 RUN apk --update --no-cache add git
 
@@ -39,7 +39,7 @@ RUN go test ./... -cover
 WORKDIR /go/src/handler
 RUN go build --ldflags "-s -w" -a -installsuffix cgo -o handler .
 
-FROM alpine:3.11
+FROM alpine:3.13
 # Add non root user and certs
 RUN apk --update --no-cache add ca-certificates \
 	&& addgroup -S app \
@@ -55,5 +55,6 @@ USER app
 ENV fprocess="./handler"
 ENV mode="http"
 ENV upstream_url="http://127.0.0.1:8082"
+ENV prefix_logs="false"
 
 CMD ["./fwatchdog"]
