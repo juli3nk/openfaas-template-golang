@@ -1,5 +1,5 @@
 FROM ghcr.io/openfaas/of-watchdog:0.8.4 as watchdog
-FROM golang:1.16-alpine3.13 as build
+FROM golang:1.17-alpine3.14 as build
 
 RUN apk --update --no-cache add git
 
@@ -39,7 +39,7 @@ RUN go test ./... -cover
 WORKDIR /go/src/handler
 RUN go build --ldflags "-s -w" -a -installsuffix cgo -o handler .
 
-FROM alpine:3.13
+FROM alpine:3.14
 # Add non root user and certs
 RUN apk --update --no-cache add ca-certificates \
 	&& addgroup -S app \
