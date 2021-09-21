@@ -27,7 +27,7 @@ RUN mkdir -p /go/src/handler
 WORKDIR /go/src/handler
 COPY . .
 
-RUN echo "replace handler/function => ./function" >> function/go.mod \
+RUN echo -e "replace handler/function => ./function\nrequire handler/function v0.0.0" >> function/go.mod \
 	&& ln -s function/go.mod go.mod \
 	&& ln -s function/go.sum go.sum
 
