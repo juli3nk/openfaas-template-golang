@@ -1,4 +1,4 @@
-FROM ghcr.io/openfaas/of-watchdog:0.8.4 as watchdog
+FROM ghcr.io/openfaas/of-watchdog:0.9.3 as watchdog
 FROM golang:1.17-alpine3.14 as builder
 
 RUN apk --update --no-cache add git
